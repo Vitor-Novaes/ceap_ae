@@ -1,0 +1,20 @@
+default: &default
+  adapter: <%= ENV['DATABASE_ADAPTER'] || 'postgresql' %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV["POSTGRES_USERNAME"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  timeout: <%= ENV['DATABASE_TIMEOUT'] || '5000' %>
+  encoding: unicode
+  host: 'db'
+
+development:
+  <<: *default
+  database: db/ceap_development
+
+test:
+  <<: *default
+  database: db/ceap_test
+
+production:
+  <<: *default
+  database: db/ceap_production
