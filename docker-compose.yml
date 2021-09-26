@@ -22,7 +22,7 @@ services:
   db:
     hostname: db
     restart: always
-    image: postgres:11-alpine
+    image: postgres:13-alpine
     environment:
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: vitor@1234
@@ -37,6 +37,7 @@ services:
     ports:
     - 6003:6003
     environment:
+      PGADMIN_DEFAULT_EMAIL: email@yopmail.com
       PGADMIN_DEFAULT_PASSWORD: vitor@1234
     depends_on:
     - db

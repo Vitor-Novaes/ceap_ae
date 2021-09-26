@@ -10,7 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_09_25_222556) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
+
+  create_table "deputies", force: :cascade do |t|
+    t.string "cpf", null: false
+    t.bigint "ide", null: false
+    t.integer "parlamentary_card", null: false
+    t.string "name", null: false
+    t.string "state", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_deputies_on_organization_id"
+  end
+
+  create_table "expenditures", force: :cascade do |t|
+    t.text "description", null: false
+    t.text "especification"
+    t.string "provider", null: false
+    t.string "provider_documentation", null: false
+    t.datetime "date"
+    t.integer "period", null: false
+    t.decimal "net_value", precision: 10, scale: 2, null: false
+    t.string "receipt_type"
+    t.string "receipt_url"
+    t.bigint "deputy_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["deputy_id"], name: "index_expenditures_on_deputy_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "abbreviation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "deputies", "organizations"
+  add_foreign_key "expenditures", "deputies"
 end

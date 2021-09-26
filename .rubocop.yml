@@ -1,0 +1,30 @@
+AllCops:
+  EnabledByDefault: true
+  Exclude:
+    - 'tmp/**/*'
+    - 'db/**/*.rb'
+    - '**/schema.rb'
+    - 'lib/tasks/**/*.rake'
+    - 'bin/**/*'
+  TargetRubyVersion: 2.6.5
+
+Style/Encoding:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Layout/HeredocIndentation:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'
+    - 'db/**/*.rb'
+    - '**/schema.rb'
+    - 'config/**/*.rb'
+
+Style/RedundantSelf:
+  Enabled: false
