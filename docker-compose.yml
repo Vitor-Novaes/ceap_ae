@@ -53,6 +53,12 @@ services:
     depends_on:
       - db
 
-  rubocop:
+  specs:
     <<: *base
-    command: /bin/ash -c "bundle exec rake lint"
+    command: /bin/bash -c "rails db:test:prepare && bundle exec rspec spec"
+    environment:
+      RAILS_ENV: test
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: vitor@1234
+    depends_on:
+    - db

@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_222556) do
   create_table "deputies", force: :cascade do |t|
     t.string "cpf", null: false
     t.bigint "ide", null: false
-    t.integer "parlamentary_card", null: false
+    t.bigint "parlamentary_card", null: false
     t.string "name", null: false
     t.string "state", null: false
     t.bigint "organization_id", null: false

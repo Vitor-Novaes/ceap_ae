@@ -3,17 +3,21 @@ class Expenditure < ApplicationRecord
   RECEIPT_TYPE = %w[INVOICE RECEIPT EXPENSES_ABROAD NO_SPECIFIED].freeze
 
   belongs_to :deputy
+  validates_associated :deputy
   validates :receipt_type, inclusion: { in: RECEIPT_TYPE }, allow_nil: false
+  validates :period, presence: true
+
 
   def self.import_from_csv(file)
     raise('The file must be CSV type') unless FILE_FORMATS.include?(file.content_type)
 
     csv = Roo::CSV.new(file, csv_options: { col_sep: ';', encoding: 'bom|utf-8' })
     rows = csv.sheet(0)
-    raise("The period has already been imported") if expendutures_period_registered?(rows.first(3))
+    raise('The period has already been imported') if expendutures_period_registered?(rows.first(3))
 
     rows.each.with_index do |row, index|
       next if index < 1
+
       @row = row
 
       if ceara?
@@ -32,8 +36,6 @@ class Expenditure < ApplicationRecord
       next
     end
   end
-
-  private
 
   def self.cell(key)
     map = {
@@ -62,9 +64,7 @@ class Expenditure < ApplicationRecord
   end
 
   def self.deputy_name_is_valid?
-    !cell('deputy_name').empty? ||
-      !cell('deputy_name').match(/LIDERANÇA/) ||
-      !cell('deputy_name').match(/LIDMIN/)
+    !cell('deputy_name').empty? || !cell('deputy_name').match(/LIDERANÇA/) || !cell('deputy_name').match(/LIDMIN/)
   end
 
   def self.check_deputy_data(organization)
@@ -109,7 +109,7 @@ class Expenditure < ApplicationRecord
       '1': 'RECEIPT',
       # It was supposed to be 2 according to the documentation, but there's no 2 in the data
       '4': 'EXPENSES_ABROAD'
-     }
+    }
 
     types[cell('expenditure_receipt_type').to_sym]
   end
@@ -119,7 +119,7 @@ class Expenditure < ApplicationRecord
   end
 
   def self.net_value_definition
-    return (cell('expenditure_net_value').to_f.ceil(2) * -1 ) if cell('expenditure_net_value').to_f.negative?
+    return (cell('expenditure_net_value').to_f.ceil(2) * -1) if cell('expenditure_net_value').to_f.negative?
 
     cell('expenditure_net_value').to_f.ceil(2)
   end
