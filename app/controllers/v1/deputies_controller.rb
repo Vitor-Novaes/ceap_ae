@@ -1,11 +1,12 @@
 class V1::DeputiesController < V1::ApplicationController
   def index
-    render(json: Deputy.all, status: :ok)
+    deputies = Deputy.all
+    render(json: deputies, status: :ok)
   end
 
   def show
-    @deputies = Deputy.includes(:expenditures).order('expenditures.net_value desc').find(params[:id])
+    deputies = Deputy.includes(:expenditures).order('expenditures.net_value desc').find(params[:id])
 
-    render(json: @deputies, include: [:expenditures], status: :ok)
+    render(json: deputies.serializable_hash(include: [:expenditures], methods: %i[expensive_expense total_expense]), status: :ok)
   end
 end

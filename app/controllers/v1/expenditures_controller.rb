@@ -8,16 +8,6 @@ class V1::ExpendituresController < V1::ApplicationController
     render(json: { error: e }, status: :bad_request)
   end
 
-  def index
-    render(json: Expenditure.all, status: :ok)
-  end
-
-  def show
-    @expenditure = Expenditure.find(params[:id])
-
-    render(json: @expenditure, status: :ok)
-  end
-
   private
 
   def import_params

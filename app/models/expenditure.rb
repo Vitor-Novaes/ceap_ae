@@ -119,8 +119,8 @@ class Expenditure < ApplicationRecord
   end
 
   def self.net_value_definition
-    return (cell('expenditure_net_value').to_f * -1 ) if cell('expenditure_net_value').to_f.negative?
+    return (cell('expenditure_net_value').to_f.ceil(2) * -1 ) if cell('expenditure_net_value').to_f.negative?
 
-    cell('expenditure_net_value')
+    cell('expenditure_net_value').to_f.ceil(2)
   end
 end

@@ -4,8 +4,8 @@ class V1::OrganizationsController < V1::ApplicationController
   end
 
   def show
-    @organizations = Organization.find(params[:id])
+    organizations = Organization.includes(:deputies).find(params[:id])
 
-    render(json: @organizations, include: [:deputies], status: :ok)
+    render(json: organizations.serializable_hash(include: [:deputies]), status: :ok)
   end
 end
