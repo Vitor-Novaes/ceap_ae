@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_222556) do
     t.string "provider_documentation", null: false
     t.datetime "date"
     t.integer "period", null: false
-    t.decimal "net_value", precision: 10, scale: 2, null: false
+    t.float "net_value"
     t.string "receipt_type"
     t.string "receipt_url"
     t.bigint "deputy_id", null: false

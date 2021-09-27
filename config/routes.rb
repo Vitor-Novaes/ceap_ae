@@ -3,5 +3,8 @@ Rails.application.routes.draw do
 
   namespace :v1 do
     post 'import-data', to: 'expenditures#import_data'
+
+    resources :organizations, only: %i[show index]
+    resources :deputies, only: %i[show index]
   end
 end

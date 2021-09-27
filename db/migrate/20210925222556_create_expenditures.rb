@@ -7,7 +7,7 @@ class CreateExpenditures < ActiveRecord::Migration[6.0]
       t.string :provider_documentation, null: false
       t.datetime :date
       t.integer :period, null: false
-      t.decimal :net_value, null: false, precision: 10, scale: 2
+      t.float :net_value
       t.string :receipt_type
       t.string :receipt_url
 
