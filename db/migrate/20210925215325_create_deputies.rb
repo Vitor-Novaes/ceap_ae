@@ -1,4 +1,4 @@
-class CreateDeputies < ActiveRecord::Migration[6.0]
+class CreateDeputies < ActiveRecord::Migration[7.0]
   def up
     create_table :deputies do |t|
       t.string :cpf, null: false, unique: true

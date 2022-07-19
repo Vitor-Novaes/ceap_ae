@@ -6,7 +6,7 @@ AllCops:
     - '**/schema.rb'
     - 'lib/tasks/**/*.rake'
     - 'bin/**/*'
-  TargetRubyVersion: 2.6.5
+  TargetRubyVersion: 3.0.4
 
 Style/Encoding:
   Enabled: true
@@ -16,6 +16,15 @@ Style/FrozenStringLiteralComment:
 
 Layout/HeredocIndentation:
   Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/EndOfLine:
+  EnforcedStyle: lf
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 Metrics/BlockLength:
   Exclude:

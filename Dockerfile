@@ -1,20 +1,22 @@
-FROM ruby:2.6.5
+FROM ruby:3.0.4
 
-ENV APP_PATH /workspace
-ENV BUNDLE_VERSION 2.2.27
+ENV APP_PATH /ceap
 ENV RAILS_PORT 3000
+ENV RAILS_ENV = 'production'
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update -qq && apt-get install -y build-essential nodejs yarn postgresql-client libpq-dev \
-    && mkdir -p $APP_PATH
+RUN apt-get update -qq && apt-get install -y build-essential \
+  libpq-dev nodejs postgresql-client && mkdir -p $APP_PATH
 WORKDIR $APP_PATH
 
-RUN gem install bundler --version "$BUNDLE_VERSION"
-ADD Gemfile* $APP_HOME/
-RUN bundle install
-ADD . $APP_HOME
-RUN yarn install --check-files
+COPY Gemfile $APP_PATH/Gemfile
+COPY Gemfile.lock $APP_PATH/Gemfile.lock
+RUN gem install bundle && bundle install
 
+COPY . $APP_PATH
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 EXPOSE $RAILS_PORT
-ENTRYPOINT [ "bundle", "exec" ]
+
+CMD ["rails", "server", "-b", "0.0.0.0"]
