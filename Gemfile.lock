@@ -66,8 +66,6 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -85,8 +83,6 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.0)
     docile (1.4.0)
-    down (5.3.1)
-      addressable (~> 2.8)
     erubi (1.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -148,7 +144,6 @@ GEM
       racc (~> 1.4)
     pg (1.4.1)
     pg (1.4.1-x64-mingw32)
-    public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -236,7 +231,6 @@ DEPENDENCIES
   bootsnap
   database_cleaner
   debug
-  down (~> 5.0)
   factory_bot_rails
   faker
   httparty (~> 0.20)

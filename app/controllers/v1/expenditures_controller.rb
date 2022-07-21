@@ -2,7 +2,7 @@ module V1
   class ExpendituresController < ApplicationController
     # WIP
     def import_data
-      Populate::RemoteSource.download_data
+      Populate::RemoteSource.new.download_data
 
       render(json: { message: 'successfully imported' })
     # rescue Exception => e
