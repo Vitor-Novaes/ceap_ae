@@ -1,4 +1,4 @@
-class V1::OrganizationsController < V1::ApplicationController
+class V1::OrganizationsController < ApplicationController
   def index
     render(json: Organization.all, status: :ok)
   end

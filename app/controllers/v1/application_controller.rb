@@ -1,5 +1,5 @@
 module V1
-  class V1::ApplicationController < ActionController::API
+  class ApplicationController < ActionController::API
     rescue_from ActionController::ParameterMissing, with: :render_parameter_missing
     rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
 

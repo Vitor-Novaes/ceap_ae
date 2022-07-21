@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2021_09_25_222556) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_19_234309) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
 
   create_table "deputies", force: :cascade do |t|
     t.string "cpf", null: false
@@ -27,18 +34,19 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_25_222556) do
   end
 
   create_table "expenditures", force: :cascade do |t|
-    t.text "description", null: false
     t.text "especification"
     t.string "provider", null: false
     t.string "provider_documentation", null: false
     t.datetime "date"
     t.integer "period", null: false
-    t.float "net_value"
-    t.string "receipt_type"
+    t.decimal "net_value", precision: 8, scale: 2, null: false
+    t.integer "receipt_type", default: 0, null: false
     t.string "receipt_url"
     t.bigint "deputy_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id", null: false
+    t.index ["category_id"], name: "index_expenditures_on_category_id"
     t.index ["deputy_id"], name: "index_expenditures_on_deputy_id"
   end
 
@@ -49,5 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_25_222556) do
   end
 
   add_foreign_key "deputies", "organizations"
+  add_foreign_key "expenditures", "categories"
   add_foreign_key "expenditures", "deputies"
 end

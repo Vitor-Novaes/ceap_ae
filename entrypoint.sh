@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+bundle install
 bundle exec rails db:create db:migrate
 echo "PostgreSQL database has been created & migrated!"
 

@@ -1,4 +1,4 @@
-class V1::DeputiesController < V1::ApplicationController
+class V1::DeputiesController < ApplicationController
   def index
     deputies = Deputy.all
     render(json: deputies, status: :ok)

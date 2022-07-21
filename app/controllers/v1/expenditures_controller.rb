@@ -1,16 +1,12 @@
-class V1::ExpendituresController < V1::ApplicationController
-  # Better way: Download file from dadosabertos and populate with rake task
-  def import_data
-    Expenditure.import_from_csv(import_params)
+module V1
+  class ExpendituresController < ApplicationController
+    # WIP
+    def import_data
+      Populate::RemoteSource.download_data
 
-    render(json: { message: 'successfully imported' })
-  rescue Exception => e
-    render(json: { error: e }, status: :bad_request)
-  end
-
-  private
-
-  def import_params
-    params.require(:file)
+      render(json: { message: 'successfully imported' })
+    # rescue Exception => e
+    #   render(json: { error: e }, status: :bad_request)
+    end
   end
 end
