@@ -29,6 +29,9 @@ gem 'httparty', '~> 0.20'
 # [https://github.com/rubyzip/rubyzip]
 gem 'rubyzip'
 
+# [https://github.com/procore/blueprinter]
+gem 'blueprinter', '~> 0.25'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
