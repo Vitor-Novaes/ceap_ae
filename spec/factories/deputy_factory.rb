@@ -8,10 +8,6 @@ FactoryBot.define do
     association :organization, strategy: :build
   end
 
-  trait :with_organization do
-    before(:create) { |deputy| deputy.organization = create(:organization) }
-  end
-
   trait :with_expenditures do
     after :create do |deputy|
       deputy.expenditures = create_list(:expenditure, 2, deputy: deputy)

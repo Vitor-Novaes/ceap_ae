@@ -1,16 +1,6 @@
 
-describe 'Given Organization Model', type: :model do
-  context 'With invalid or missing data to organization' do
-    it 'Then return error' do
-      org = build(:organization, abbreviation: nil)
-      expect(org.valid?).to be_falsey
-      expect(org.errors.details).to have_key(:abbreviation)
-    end
-  end
+describe Organization, type: :model do
+  it { should have_many(:deputies) }
 
-  context 'With valid data to Organization' do
-    it 'Then create a organization' do
-      expect(build(:organization)).to be_valid
-    end
-  end
+  it { should validate_presence_of(:abbreviation) }
 end

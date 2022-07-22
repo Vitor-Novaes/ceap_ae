@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
     resources :organizations, only: %i[show index]
     resources :deputies, only: %i[show index]
+    resources :expenditures, only: %i[index show]
   end
 end

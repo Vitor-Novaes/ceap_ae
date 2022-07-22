@@ -1,15 +1,19 @@
-class V1::DeputiesController < V1::ApplicationController
-  def index
-    deputies = Deputy.all
-    render(json: deputies, status: :ok)
-  end
+module V1
+  class DeputiesController < ApplicationController
+    def index
+      render json: DeputyBlueprint.render(
+        Deputy.last(10),
+        view: :summary
+      ), status: :ok
+    end
 
-  def show
-    deputies = Deputy.includes(:expenditures).order('expenditures.net_value desc').find(params[:id])
-
-    render(
-      json: deputies.serializable_hash(include: [:expenditures], methods: %i[expensive_expense total_expense photo_url]),
-      status: :ok
-    )
+    def show
+      render json: DeputyBlueprint.render(
+        Deputy.joins(:expenditures)
+          .order('expenditures.net_value desc')
+          .find(params[:id]),
+        view: :extended
+      ), status: :ok
+    end
   end
 end

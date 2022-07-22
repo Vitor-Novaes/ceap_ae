@@ -1,4 +1,4 @@
-class CreateExpenditures < ActiveRecord::Migration[6.0]
+class CreateExpenditures < ActiveRecord::Migration[7.0]
   def up
     create_table :expenditures do |t|
       t.text :description, null: false

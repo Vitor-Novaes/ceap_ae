@@ -1,11 +1,18 @@
-class V1::OrganizationsController < V1::ApplicationController
-  def index
-    render(json: Organization.all, status: :ok)
-  end
+module V1
+  class OrganizationsController < ApplicationController
+    def index
+      render json: OrganizationBlueprint.render(
+        Organization.last(10),
+        view: :summary
+      ), status: :ok
+    end
 
-  def show
-    organizations = Organization.includes(:deputies).find(params[:id])
-
-    render(json: organizations.serializable_hash(include: [:deputies]), status: :ok)
+    def show
+      render json:
+        OrganizationBlueprint.render(
+                                      Organization.find(params[:id]),
+                                      view: :extended
+                                    ), status: :ok
+    end
   end
 end
