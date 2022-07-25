@@ -1,22 +1,14 @@
-require 'zip'
 
-# WIP
 module Populate
-  class RemoteSource
-    include HTTParty
-
-    def initialize
-      @base_uri = 'https://www.camara.leg.br/cotas'
+  class QuotasFileSource
+    def initialize(file)
       @csv = nil
+      @file = file
     end
 
-    def download_data
-      zip_file = HTTParty.get("#{@base_uri}/Ano-2022.csv.zip").body
-
-      file = unzip_file(zip_file)
-
+    def execute
       @csv = Roo::CSV.new(
-        file,
+        @file,
         csv_options: { col_sep: ';', encoding: 'bom|utf-8', liberal_parsing: true }
       ).sheet(0)
 
@@ -40,15 +32,6 @@ module Populate
     end
 
     private
-
-    def unzip_file(zip_file)
-      input_stream = Zip::File.open_buffer(zip_file)
-      input_stream.each do |file|
-        File.open('tmp/2022.csv', 'w') { |f| f.write(file.get_input_stream.read.force_encoding('UTF-8')) }
-      end
-
-      File.open('tmp/2022.csv', 'r')
-    end
 
     def cell(key)
       map = {

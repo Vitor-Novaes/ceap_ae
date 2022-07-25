@@ -1,8 +1,16 @@
 module V1
   class ExpendituresController < ApplicationController
-    # at_least_for_now
+
+    def import_stream_data
+      file = $quotas_file_service.download_by_year(Time.now.year)
+      Populate::QuotasFileSource.new(file).execute
+
+      render json: { message: 'successfully imported' }
+    end
+
+    # TODO validations
     def import_data
-      Populate::RemoteSource.new.download_data
+      Populate::QuotasFileSource.new(params[:file]).execute
 
       render json: { message: 'successfully imported' }
     end

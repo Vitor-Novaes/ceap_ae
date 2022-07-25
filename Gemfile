@@ -32,6 +32,10 @@ gem 'rubyzip'
 # [https://github.com/procore/blueprinter]
 gem 'blueprinter', '~> 0.25'
 
+# [https://github.com/ondrejbartas/sidekiq-cron]
+gem 'sidekiq-cron'
+gem 'sidekiq'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
@@ -54,6 +58,7 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-json_expectations'
   gem 'rspec-rails'
+  # gem 'rspec-sidekiq' TODO
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
