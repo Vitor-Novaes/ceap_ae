@@ -1,0 +1,37 @@
+example_id                                                      | status | run_time        |
+--------------------------------------------------------------- | ------ | --------------- |
+./spec/controllers/v1/deputies_controller_spec.rb[1:1:1]        | passed | 0.00187 seconds |
+./spec/controllers/v1/deputies_controller_spec.rb[1:1:2]        | passed | 0.00338 seconds |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:1:1]      | passed | 0.09908 seconds |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:1:2]      | passed | 0.0663 seconds  |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:1:3]      | passed | 0.07297 seconds |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:2:1]      | passed | 0.22968 seconds |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:2:2]      | passed | 0.009 seconds   |
+./spec/controllers/v1/deputies_controller_spec.rb[1:2:2:3]      | passed | 0.01259 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:1:1]   | passed | 0.00175 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:1:2]   | passed | 0.00182 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:1:1] | passed | 0.0082 seconds  |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:1:2] | passed | 0.01027 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:1:3] | passed | 0.00854 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:2:1] | passed | 0.00433 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:2:2] | passed | 0.00468 seconds |
+./spec/controllers/v1/organizations_controller_spec.rb[1:2:2:3] | passed | 0.00585 seconds |
+./spec/models/category_spec.rb[1:1]                             | passed | 0.00305 seconds |
+./spec/models/category_spec.rb[1:2]                             | passed | 0.0094 seconds  |
+./spec/models/category_spec.rb[1:3]                             | passed | 0.01037 seconds |
+./spec/models/deputy_spec.rb[1:1]                               | passed | 0.00613 seconds |
+./spec/models/deputy_spec.rb[1:2]                               | passed | 0.00193 seconds |
+./spec/models/deputy_spec.rb[1:3]                               | passed | 0.01157 seconds |
+./spec/models/deputy_spec.rb[1:4]                               | passed | 0.01045 seconds |
+./spec/models/deputy_spec.rb[1:5]                               | passed | 0.00732 seconds |
+./spec/models/deputy_spec.rb[1:6]                               | passed | 0.0108 seconds  |
+./spec/models/deputy_spec.rb[1:7]                               | passed | 0.01218 seconds |
+./spec/models/deputy_spec.rb[1:8]                               | passed | 0.01109 seconds |
+./spec/models/deputy_spec.rb[1:9]                               | passed | 0.00841 seconds |
+./spec/models/deputy_spec.rb[1:10]                              | passed | 0.00853 seconds |
+./spec/models/expenditure_spec.rb[1:1]                          | passed | 0.00247 seconds |
+./spec/models/expenditure_spec.rb[1:2]                          | passed | 0.00247 seconds |
+./spec/models/expenditure_spec.rb[1:3]                          | passed | 0.00509 seconds |
+./spec/models/expenditure_spec.rb[1:4]                          | passed | 0.00468 seconds |
+./spec/models/organization_spec.rb[1:1]                         | passed | 0.00112 seconds |
+./spec/models/organization_spec.rb[1:2]                         | passed | 0.00384 seconds |

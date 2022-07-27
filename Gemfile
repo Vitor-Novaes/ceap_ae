@@ -40,6 +40,10 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rspec-json_expectations'
+  gem 'rspec-rails'
+  gem 'capybara'
+  # gem 'rspec-sidekiq' TODO
 end
 
 group :development do
@@ -56,9 +60,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'rspec-json_expectations'
-  gem 'rspec-rails'
-  # gem 'rspec-sidekiq' TODO
   gem 'shoulda-matchers'
+  gem "webmock"
   gem 'simplecov', require: false
 end

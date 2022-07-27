@@ -60,4 +60,4 @@ services:
     environment:
       RAILS_ENV: test
       REDIS_URL: redis://redis:6379/0
-      DATABASE_URL: postgres://postgres:password@db:5432/acme_test
+      DATABASE_URL: postgres://postgres:password@db:5432/ceap_test
