@@ -31,6 +31,6 @@ jobs:
         with:
           ruby-version: '3.0.4'
           bundler-cache: true
-      - run: bundle install
+      - run: bundle exec install
       - run: bundle exec rails db:prepare
       - run: bundle exec rspec
