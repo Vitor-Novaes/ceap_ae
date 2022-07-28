@@ -1,6 +1,8 @@
 require 'simplecov'
 
 SimpleCov.start :rails do
+  add_group 'Services', 'app/services'
+  add_group 'Blueprints', 'app/blueprints'
   add_filter do |source_file|
     source_file.lines.count < 5
   end
@@ -38,7 +40,8 @@ WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  # config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.file_fixture_path = "#{::Rails.root}/spec/fixtures/files"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
