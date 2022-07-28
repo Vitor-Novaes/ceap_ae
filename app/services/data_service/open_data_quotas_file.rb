@@ -7,9 +7,14 @@ module DataService
     BASE_URI = 'https://www.camara.leg.br/cotas'
 
     def download_by_year(year)
-      zip_file = HTTParty.get("#{BASE_URI}/Ano-#{year}.csv.zip").body
+      response = HTTParty.get("#{BASE_URI}/Ano-#{year}.csv.zip")
 
-      unzip_file(zip_file, year)
+      if response.code != 200 && year == Time.now.year
+        return self.download_by_year(year-1)
+      end
+      raise HTTParty::Error, "Error HTTParty with #{response.code}" if response.code != 200
+
+      unzip_file(response.body, year)
     end
 
     private

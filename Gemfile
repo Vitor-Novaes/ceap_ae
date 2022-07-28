@@ -21,20 +21,20 @@ gem 'jbuilder'
 gem 'bootsnap', require: false
 
 # [https://github.com/roo-rb/roo]
-gem 'roo'
+gem 'roo', '~> 2.9.0'
 
 # [https://github.com/jnunemaker/httparty]
 gem 'httparty', '~> 0.20'
 
 # [https://github.com/rubyzip/rubyzip]
-gem 'rubyzip'
+gem 'rubyzip', '~> 2.3.2'
 
 # [https://github.com/procore/blueprinter]
 gem 'blueprinter', '~> 0.25'
 
 # [https://github.com/ondrejbartas/sidekiq-cron]
-gem 'sidekiq-cron'
-gem 'sidekiq'
+gem 'sidekiq-cron', '~> 1.7.0'
+gem 'sidekiq', '~> 6.5.1'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -43,7 +43,7 @@ group :development, :test do
   gem 'rspec-json_expectations'
   gem 'rspec-rails'
   gem 'capybara'
-  # gem 'rspec-sidekiq' TODO
+  gem 'rspec-sidekiq'
 end
 
 group :development do

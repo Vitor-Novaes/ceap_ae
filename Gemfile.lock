@@ -229,6 +229,9 @@ GEM
       rspec-expectations (~> 3.10)
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
+    rspec-sidekiq (3.1.0)
+      rspec-core (~> 3.0, >= 3.0.0)
+      sidekiq (>= 2.4.0)
     rspec-support (3.11.0)
     rubyzip (2.3.2)
     shoulda-matchers (5.1.0)
@@ -281,13 +284,14 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.3)
-  roo
+  roo (~> 2.9.0)
   rspec-json_expectations
   rspec-rails
-  rubyzip
+  rspec-sidekiq
+  rubyzip (~> 2.3.2)
   shoulda-matchers
-  sidekiq
-  sidekiq-cron
+  sidekiq (~> 6.5.1)
+  sidekiq-cron (~> 1.7.0)
   simplecov
   spring (~> 4.0)
   webmock

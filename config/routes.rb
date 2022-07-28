@@ -10,11 +10,10 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   namespace :v1 do
-    post 'import-data', to: 'expenditures#import_data'
-    get 'import-stream-data', to: 'expenditures#import_stream_data'
-
     resources :organizations, only: %i[show index]
     resources :deputies, only: %i[show index]
-    resources :expenditures, only: %i[index show]
+    resources :expenditures, only: %i[index show] do
+      get 'import-stream-data', on: :collection
+    end
   end
 end
