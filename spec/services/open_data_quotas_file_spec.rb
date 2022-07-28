@@ -35,7 +35,7 @@ describe DataService::OpenDataQuotasFile do
 
       it 'Should return unzip file past year case file year not available yet' do
         allow(Time).to receive_message_chain(:now, :year) { 2023 }
-        stub_request(:get, 'https://www.camara.leg.br/cotas/Ano-2023.csv.zip').
+        request_2023 = stub_request(:get, 'https://www.camara.leg.br/cotas/Ano-2023.csv.zip').
          with(
            headers: {
           'Accept'=>'*/*',
@@ -43,7 +43,7 @@ describe DataService::OpenDataQuotasFile do
           'User-Agent'=>'Ruby'
            }).
          to_return(status: 404, body: '', headers: {})
-        stub_request(:get, 'https://www.camara.leg.br/cotas/Ano-2022.csv.zip').
+        request_2022 = stub_request(:get, 'https://www.camara.leg.br/cotas/Ano-2022.csv.zip').
          with(
            headers: {
           'Accept'=>'*/*',
@@ -55,6 +55,8 @@ describe DataService::OpenDataQuotasFile do
         file = DataService::OpenDataQuotasFile.new.download_by_year(2023)
 
         expect(File.basename(file)).to eq('2022.csv')
+        expect(request_2023).to have_been_requested
+        expect(request_2022).to have_been_requested
       end
     end
   end

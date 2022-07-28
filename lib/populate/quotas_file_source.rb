@@ -3,6 +3,7 @@ module Populate
   class QuotasFileSource
     def initialize(file)
       @csv = nil
+      @header = nil
       @file = file
     end
 
@@ -13,7 +14,7 @@ module Populate
       ).sheet(0)
 
       @csv.each.with_index do |row, index|
-        next if index < 1
+        @header = row if index == 0
         @row = row
 
         if ceara?
@@ -35,21 +36,21 @@ module Populate
 
     def cell(key)
       map = {
-        deputy_name: 0,
-        deputy_cpf: 1,
-        deputy_ide: 2,
-        deputy_parlamentary_card: 3,
-        deputy_state: 5,
-        organization_abbreviation: 6,
-        category_name: 9,
-        expenditure_especification: 11,
-        expenditure_provider: 12,
-        expenditure_provider_documentation: 13,
-        expenditure_receipt_type: 15,
-        expenditure_date: 16,
-        expenditure_net_value: 19,
-        expenditure_period: 21,
-        expenditure_receipt_url: 30
+        deputy_name: @header.find_index('txNomeParlamentar'),
+        deputy_cpf: @header.find_index('cpf'),
+        deputy_ide: @header.find_index('ideCadastro'),
+        deputy_parlamentary_card: @header.find_index('nuCarteiraParlamentar'),
+        deputy_state: @header.find_index('sgUF'),
+        organization_abbreviation: @header.find_index('sgPartido'),
+        category_name: @header.find_index('txtDescricao'),
+        expenditure_especification: @header.find_index('txtDescricaoEspecificacao'),
+        expenditure_provider: @header.find_index('txtFornecedor'),
+        expenditure_provider_documentation: @header.find_index('txtCNPJCPF'),
+        expenditure_receipt_type: @header.find_index('indTipoDocumento'),
+        expenditure_date: @header.find_index('datEmissao'),
+        expenditure_net_value: @header.find_index('vlrLiquido'),
+        expenditure_period: @header.find_index('numAno'),
+        expenditure_receipt_url: @header.find_index('urlDocumento'),
       }
 
       @row.at(map[key.to_sym])
@@ -103,7 +104,7 @@ module Populate
     end
 
     def define_date_expenditure
-      unless cell('expenditure_date').empty? || cell('expenditure_date').nil?
+      unless cell('expenditure_date').nil? || cell('expenditure_date').empty?
         date = Time.parse(cell('expenditure_date'))
         return Time.new(date.year, date.month, date.day, date.hour, date.min, date.sec, "-03:00")
       end

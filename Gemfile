@@ -42,8 +42,6 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-json_expectations'
   gem 'rspec-rails'
-  gem 'capybara'
-  gem 'rspec-sidekiq'
 end
 
 group :development do
@@ -59,8 +57,10 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem "webmock"
   gem 'simplecov', require: false
+  gem 'rspec-sidekiq'
 end

@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :organizations, only: %i[show index]
     resources :deputies, only: %i[show index]
-    resources :expenditures, only: %i[index show] do
-      get 'import-stream-data', on: :collection
-    end
+    resources :expenditures, only: %i[index show]
   end
 end

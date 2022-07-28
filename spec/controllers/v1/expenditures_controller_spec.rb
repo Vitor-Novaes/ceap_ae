@@ -1,9 +1,7 @@
 describe V1::ExpendituresController, type: :controller do
-  include ActiveJob::TestHelper
   describe 'exposed routes' do
     it { should route(:get, '/v1/expenditures').to(action: :index) }
     it { should route(:get, '/v1/expenditures/1').to(action: :show, id: 1) }
-    it { should route(:get, 'v1/expenditures/import-stream-data').to(action: :import_stream_data) }
   end
 
   describe 'GET /v1/expenditures/:id' do
@@ -46,21 +44,6 @@ describe V1::ExpendituresController, type: :controller do
 
       it 'Should return error not found message' do
         expect(json_response[:errors][:message]).to eq("Couldn't find Expenditure with 'id'=-1")
-      end
-    end
-  end
-
-  describe 'GET /v1/import-stream-data' do
-    context 'When start job sync data' do
-      before { get :import_stream_data }
-
-      include_examples 'ok response'
-
-      it 'Should enqueue it' do
-        assert_enqueued_jobs 1, queue: 'default'
-        expect(SyncDataJob).to be_processed_in :default
-        expect(SyncDataJob).to be_retryable true
-        expect(json_response[:message]).to eq('successfully enqueue sync data')
       end
     end
   end
