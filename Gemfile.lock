@@ -109,7 +109,6 @@ GEM
     faker (2.21.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
-    ffi (1.15.5-x64-mingw32)
     fugit (1.5.3)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
@@ -160,12 +159,9 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.7-x64-mingw32)
-      racc (~> 1.4)
     nokogiri (1.13.7-x86_64-linux)
       racc (~> 1.4)
     pg (1.4.1)
-    pg (1.4.1-x64-mingw32)
     public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
@@ -267,7 +263,6 @@ GEM
     zeitwerk (2.6.0)
 
 PLATFORMS
-  x64-mingw32
   x86_64-linux
 
 DEPENDENCIES
