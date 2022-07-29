@@ -9,8 +9,12 @@ FactoryBot.define do
   end
 
   trait :with_expenditures do
-    after :create do |deputy|
-      deputy.expenditures = create_list(:expenditure, 2, deputy: deputy)
+    transient do
+      expenditure_count { 5 }
+    end
+
+    after :create do |deputy, evaluator|
+      create_list(:expenditure, evaluator.expenditure_count, deputy: deputy)
     end
   end
 end

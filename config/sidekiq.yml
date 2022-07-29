@@ -1,0 +1,9 @@
+:concurrency: 10
+:queues:
+  - default
+  - mailers
+  - sync_data
+
+development:
+  :verbose: true
+  :logfile: ./log/sidekiq.log

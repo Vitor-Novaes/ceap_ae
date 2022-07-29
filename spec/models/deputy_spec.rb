@@ -13,4 +13,8 @@ describe Deputy, type: :model do
   it { should validate_uniqueness_of(:cpf).case_insensitive }
   it { should validate_uniqueness_of(:ide).case_insensitive }
   it { should validate_uniqueness_of(:parlamentary_card).case_insensitive }
+
+  # obs
+  describe '#total_expense' do
+  end
 end

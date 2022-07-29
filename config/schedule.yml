@@ -1,0 +1,9 @@
+
+sync_open_data:
+  cron: every day at 12am and 6pm on America/Sao_Paulo
+  class: SyncDataJob
+  active_job: true
+  queue: default
+  description:
+    Download Data From WebSite https://dadosabertos.camara.leg.br/swagger/api.html#staticfile
+    And Sync Database registers

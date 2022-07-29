@@ -6,7 +6,7 @@ FactoryBot.define do
     date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
     period { [2018, 2019, 2020, 2021].sample }
     net_value { Faker::Number.decimal(l_digits: 3, r_digits: 2) }
-    receipt_type { rand(0..3) }
+    receipt_type { [0,1,4].sample }
     receipt_url { Faker::Internet.url }
     deputy factory: :deputy
     category factory: :category

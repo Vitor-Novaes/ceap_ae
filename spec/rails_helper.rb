@@ -1,20 +1,29 @@
 require 'simplecov'
 
-SimpleCov.start 'rails'
+SimpleCov.start :rails do
+  add_group 'Services', 'app/services'
+  add_group 'Blueprints', 'app/blueprints'
+  add_filter do |source_file|
+    source_file.lines.count < 5
+  end
+end
+
+ENV['RAILS_ENV'] ||= 'test'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 require File.expand_path('../../config/environment', __FILE__)
 
+# Prevent database truncation if the environment is production
+abort("The Rails is running in #{Rails.env}! Should be test!") unless Rails.env.test?
+
 # Loads rails
 require 'spec_helper'
 require 'rspec/rails'
-
-# Prevent database truncation if the environment is production
-abort("The Rails is running in #{Rails.env}! Should be test!") unless Rails.env.test?
-require 'database_cleaner'
+require 'rspec/json_expectations'
 require 'factory_bot'
 require 'faker'
-require 'shoulda/matchers'
+require 'database_cleaner'
+require 'webmock/rspec'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
@@ -26,14 +35,19 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+WebMock.disable_net_connect!(allow_localhost: true)
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.file_fixture_path = "#{::Rails.root}/spec/fixtures/files"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
+
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
