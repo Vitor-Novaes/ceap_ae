@@ -47,4 +47,139 @@ describe V1::ExpendituresController, type: :controller do
       end
     end
   end
+
+  describe 'GET /v1/expenditures' do
+    before do
+      meshuggah = create(:organization, abbreviation: 'MSG')
+      gojira = create(:organization, abbreviation: 'GJR')
+      djent = create(:category, name: 'DJENT')
+      metal = create(:category, name: 'METAL')
+
+      torii = { name: 'Torii', organization: gojira, id: 99999 }
+
+      create(:deputy, :with_expenditures, torii)
+      create_list(:deputy, 2, :with_expenditures, organization: meshuggah)
+      create_list(:deputy, 2, :with_expenditures, organization: gojira)
+      create_list(:expenditure, 5, category: djent, date: '2020-07-30 00:00:00', provider: 'Wanner')
+      create_list(:expenditure, 5, category: metal, date: '2022-08-02 00:00:00', provider: 'Wanner')
+    end
+
+    before(:each) { get :index, params: params }
+
+    context 'When get all expenditures using all params deep filtering' do
+      let(:params) {
+        {
+          sort_value: 'DESC',
+          page: 1,
+          per_page: 5,
+          category: 'DJENT',
+          provider: 'wanner',
+          start_date: '2020-07-27 00:00:00',
+          end_date: '2022-08-01 23:59:59'
+        }
+      }
+
+      include_examples 'ok response'
+
+      it 'Should return deep filter record' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('5')
+        expect(response.headers['X-Total']).to eq('5')
+        expect(response.headers['Link']).to be_nil
+        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+      end
+    end
+
+    context 'When get all expenditures by organization order for higher net_value' do
+      let(:params) {
+        {
+          total_spent: 'DESC',
+          page: 1,
+          per_page: 2,
+          organization: 'GJR'
+        }
+      }
+
+      include_examples 'ok response'
+
+      it 'Should return match expenditures paginated' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('2')
+        expect(response.headers['X-Total']).to eq('15')
+        expect(response.headers['Link']).not_to be_nil
+        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+      end
+    end
+
+    context 'When get all expenditures by deputy' do
+      let(:params) {
+        {
+          total_spent: 'ASC',
+          page: 1,
+          per_page: 5,
+          deputy: 99999,
+        }
+      }
+
+      include_examples 'ok response'
+
+      it 'Should return match expenditures paginated' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('5')
+        expect(response.headers['X-Total']).to eq('5')
+        expect(response.headers['Link']).to be_nil
+        expect(json_response.at(0)[:net_value] < json_response.at(1)[:net_value])
+      end
+    end
+
+    context 'When get expenditures with unmatch params' do
+      let(:params) {
+        {
+          total_spent: 'DESC',
+          organization: 'MSG',
+          category: 'METAL'
+        }
+      }
+
+      include_examples 'ok response'
+
+      it 'Should return no expenditures' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('10')
+        expect(response.headers['X-Total']).to eq('0')
+        expect(response.headers['Link']).to be_nil
+      end
+    end
+
+    context 'When get expenditures with range date end only' do
+      let(:params) {
+        {
+          provider: 'wanner',
+          end_date: '2020-07-30 23:59:59'
+        }
+      }
+
+      include_examples 'ok response'
+
+      it 'Should return expenditures until that date' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('10')
+        expect(response.headers['X-Total']).to eq('5')
+        expect(response.headers['Link']).to be_nil
+      end
+    end
+
+    context 'When get expenditures without params' do
+      let(:params) { nil }
+
+      include_examples 'ok response'
+
+      it 'Should return all expenditures paginated' do
+        expect(response.headers['X-Page']).to eq('1')
+        expect(response.headers['X-Per-Page']).to eq('10')
+        expect(response.headers['X-Total']).to eq('36')
+        expect(response.headers['Link']).not_to be_nil
+      end
+    end
+  end
 end

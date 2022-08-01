@@ -18,14 +18,16 @@ module Populate
         @row = row
 
         if ceara?
-          # build organization
-          organization = check_belongs_organization
+          ActiveRecord::Base.transaction do
+            # build organization
+            organization = check_belongs_organization
 
-          # build deputy
-          deputy = check_deputy_data(organization)
+            # build deputy
+            deputy = check_deputy_data(organization)
 
-          # build expenditure
-          create_expenditure(deputy)
+            # build expenditure
+            create_expenditure(deputy)
+          end
         end
 
         next

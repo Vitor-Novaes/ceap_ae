@@ -1,6 +1,5 @@
 describe Populate::QuotasFileSource do
   describe '#execute' do
-    # TODO check data on route
     context 'When given correct file' do
       it 'Should populate Deputy correctly' do
         expect {

@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :deputy do
-    cpf { Faker::IDNumber.valid }
-    ide { Faker::Number.number(digits: 5) }
-    parlamentary_card { Faker::Number.number(digits: 5) }
-    name { Faker::Name.name }
+    cpf { Faker::IDNumber.unique.valid }
+    ide { Faker::Number.unique.number(digits: 5) }
+    parlamentary_card { Faker::Number.unique.number(digits: 10) }
+    name { Faker::Name.unique.name }
     state { Faker::Address.state }
     association :organization, strategy: :build
   end

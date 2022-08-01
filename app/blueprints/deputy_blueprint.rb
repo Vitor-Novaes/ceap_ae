@@ -3,6 +3,10 @@ class DeputyBlueprint < Blueprinter::Base
 
   view :summary do
     fields :cpf, :name, :state, :ide, :parlamentary_card
+    # at_least_for_now
+    field :total_spent do |object|
+      object.expenditures.sum(:net_value).ceil(2)
+    end
     field :photo_url do |deputy|
       "http://www.camara.leg.br/internet/deputado/bandep/#{deputy.ide}.jpg"
     end
@@ -12,8 +16,6 @@ class DeputyBlueprint < Blueprinter::Base
 
   view :extended do
     include_view :summary
-    field :total_expenditures do |object|
-      object.expenditures.sum(:net_value).ceil(2)
-    end
+    fields :created_at, :updated_at
   end
 end

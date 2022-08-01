@@ -13,9 +13,7 @@ module V1
 
     def show
       render json: DeputyBlueprint.render(
-        Deputy.joins(:expenditures)
-          .order('expenditures.net_value desc')
-          .find(params[:id]),
+        Deputy.find(params[:id]),
         view: :extended
       ), status: :ok
     end
