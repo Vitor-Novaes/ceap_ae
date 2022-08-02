@@ -1,5 +1,6 @@
 module V1
   class ApplicationController < ActionController::API
+    include FilterSource
 
     rescue_from ActionController::ParameterMissing, with: :render_unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found

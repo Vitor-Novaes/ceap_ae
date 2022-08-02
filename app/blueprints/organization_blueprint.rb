@@ -7,6 +7,6 @@ class OrganizationBlueprint < Blueprinter::Base
 
   view :extended do
     include_view :summary
-    association :deputies, blueprint: DeputyBlueprint, view: :summary
+    fields :created_at, :updated_at
   end
 end

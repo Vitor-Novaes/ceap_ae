@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_19_234309) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_01_102734) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,8 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_234309) do
 
   create_table "deputies", force: :cascade do |t|
     t.string "cpf", null: false
-    t.bigint "ide", null: false
-    t.bigint "parlamentary_card", null: false
+    t.string "ide", null: false
+    t.string "parlamentary_card", null: false
     t.string "name", null: false
     t.string "state", null: false
     t.bigint "organization_id", null: false

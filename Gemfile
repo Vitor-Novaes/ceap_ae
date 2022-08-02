@@ -36,6 +36,10 @@ gem 'blueprinter', '~> 0.25'
 gem 'sidekiq-cron', '~> 1.7.0'
 gem 'sidekiq', '~> 6.5.1'
 
+# [https://github.com/kaminari/kaminari]
+gem 'kaminari'
+gem 'api-pagination'
+
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
