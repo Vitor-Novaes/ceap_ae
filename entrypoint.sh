@@ -2,8 +2,6 @@
 set -e
 
 bundle install
-bundle exec rails db:create db:migrate
-echo "PostgreSQL database has been created & migrated!"
 
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f /ceap/tmp/pids/server.pid
