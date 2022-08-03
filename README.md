@@ -19,9 +19,11 @@ The Quota for the Exercise of Parliamentary Activity - CEAP (former indemnity am
 
 ## Running this project
 
+#### development environment
 - Install [Docker Engine and Docker-Compose](https://docs.docker.com/engine/install/)
 - Rename `.env.example` for `.env`
 - Execute on project's directory `$ docker-compose up app`
 
-### current coverage
-	All Files ( 83.67% covered at 17.95 hits/line )
+#### Specs
+  - `$ docker-compose run --rm specs`
+  - `All Files ( 83.67% covered at 17.95 hits/line )`
