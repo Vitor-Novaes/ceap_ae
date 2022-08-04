@@ -10,7 +10,9 @@ services:
     ports: []
     stdin_open: true
     tty: true
-    build: .
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
     volumes:
       - .:/ceap
     depends_on:
@@ -38,7 +40,9 @@ services:
 
   sidekiq:
     command: bundle exec sidekiq -C config/sidekiq.yml
-    build: .
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
     tty: true
     env_file: .env
     volumes:
