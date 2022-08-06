@@ -1,13 +1,15 @@
 module V1
   class ExpendituresController < ApplicationController
     def index
-      expenditures = paginate filter_source(Expenditure, params),
-        per_page: params[:per_page],
-        page: params[:page]
+      expenditures = filter_source(Expenditure, params)
 
       render json: ExpenditureBlueprint.render(
-        expenditures,
-        view: :summary
+        paginate(expenditures, per_page: params[:per_page], page: params[:page]),
+        view: :summary,
+        root: :expenditures,
+        meta: {
+          total_expenses: report_expenses(expenditures)
+        }
       ), status: :ok
     end
 

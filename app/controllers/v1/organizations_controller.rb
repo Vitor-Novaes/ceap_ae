@@ -1,13 +1,12 @@
 module V1
   class OrganizationsController < ApplicationController
     def index
-      orgs = paginate Organization.order(abbreviation: 'ASC'),
-        per_page: params[:per_page],
-        page: params[:page]
+      orgs = Organization.order(abbreviation: 'ASC')
 
       render json: OrganizationBlueprint.render(
-        orgs,
-        view: :summary
+        paginate(orgs, per_page: params[:per_page], page: params[:page]),
+        view: :summary,
+        root: :organizations
       ), status: :ok
     end
 

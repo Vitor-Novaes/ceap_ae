@@ -86,7 +86,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('5')
         expect(response.headers['X-Total']).to eq('5')
         expect(response.headers['Link']).to be_nil
-        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] >
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 
@@ -107,7 +109,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('2')
         expect(response.headers['X-Total']).to eq('15')
         expect(response.headers['Link']).not_to be_nil
-        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] >
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 
@@ -128,7 +132,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('5')
         expect(response.headers['X-Total']).to eq('5')
         expect(response.headers['Link']).to be_nil
-        expect(json_response.at(0)[:net_value] < json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] <
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 
