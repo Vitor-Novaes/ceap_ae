@@ -46,16 +46,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: CDNievas/heroku-action@v1.0
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_email: $HEROKU_EMAIL
           heroku_api_key: $HEROKU_API_KEY
           heroku_app_name: $APP_NAME
-          useforce: true,
-          dynamicFiles: true,
-          procfile: |
-            worker: bundle exec sidekiq -e production -C config/sidekiq.yml
-            release: bundle exec rails db:migrate
+          heroku_email: $HEROKU_EMAIL
+          procfile: 'worker: bundle exec sidekiq -e production -C config/sidekiq.yml'
   deploy:
     needs: worker
     runs-on: ubuntu-latest
