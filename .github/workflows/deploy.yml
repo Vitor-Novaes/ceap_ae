@@ -51,18 +51,17 @@ jobs:
           heroku_api_key: $HEROKU_API_KEY
           heroku_app_name: $APP_NAME
           heroku_email: $HEROKU_EMAIL
-          procfile: 'worker: bundle exec sidekiq -e production -C config/sidekiq.yml'
-  deploy:
-    needs: worker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Heroku Container registry
-        uses: actions/checkout@v1
+  # deploy:
+  #   needs: worker
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Heroku Container registry
+  #       uses: actions/checkout@v1
 
-      - name: Docker build
-        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+  #     - name: Docker build
+  #       run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-      - name: Publish
-        run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+  #     - name: Publish
+  #       run: |
+  #         heroku container:push web -a $APP_NAME
+  #         heroku container:release web -a $APP_NAME
