@@ -1,48 +1,48 @@
 name: deploy
 on:
   push:
-    branches: [ master, deploy-fix ]
+    branches: [ master ]
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
   HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
 jobs:
-  # specs:
-  #   runs-on: ubuntu-latest
-  #   services:
-  #     postgres:
-  #       image: postgres
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: password
-  #         POSTGRES_DB: ceap_test
-  #       ports:
-  #         - 5432:5432
-  #       options: >-
-  #         --health-cmd pg_isready
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 5
-  #     redis:
-  #       image: redis
-  #       ports:
-  #         - 6379:6379
-  #   env:
-  #     RAILS_ENV: test
-  #     REDIS_URL: redis://redis:6379/0
-  #     DATABASE_URL: postgres://postgres:password@127.0.0.1:5432/ceap_test
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ruby/setup-ruby@v1
-  #       with:
-  #         ruby-version: '3.0.4'
-  #         bundler-cache: false
-  #     - run: bundle install
-  #     - run: bundle exec rails db:prepare
-  #     - run: bundle exec rspec
-  worker:
-    # needs: specs
+  specs:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ceap_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+    env:
+      RAILS_ENV: test
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgres://postgres:password@127.0.0.1:5432/ceap_test
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0.4'
+          bundler-cache: false
+      - run: bundle install
+      - run: bundle exec rails db:prepare
+      - run: bundle exec rspec
+  deploy:
+    needs: specs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -51,6 +51,7 @@ jobs:
           heroku_api_key: $HEROKU_API_KEY
           heroku_app_name: $APP_NAME
           heroku_email: $HEROKU_EMAIL
+  # heroku container approach
   # deploy:
   #   needs: worker
   #   runs-on: ubuntu-latest
