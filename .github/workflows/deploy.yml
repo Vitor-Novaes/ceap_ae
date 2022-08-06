@@ -5,6 +5,7 @@ on:
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
 jobs:
   specs:
@@ -44,13 +45,24 @@ jobs:
     needs: specs
     runs-on: ubuntu-latest
     steps:
-      - name: Heroku Container registry
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: $HEROKU_API_KEY
+          heroku_app_name: $APP_NAME
+          heroku_email: $HEROKU_EMAIL
+  # heroku container approach
+  # deploy:
+  #   needs: worker
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Heroku Container registry
+  #       uses: actions/checkout@v1
 
-      - name: Docker build
-        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+  #     - name: Docker build
+  #       run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
 
-      - name: Publish
-        run: |
-          heroku container:push web -a $APP_NAME
-          heroku container:release web -a $APP_NAME
+  #     - name: Publish
+  #       run: |
+  #         heroku container:push web -a $APP_NAME
+  #         heroku container:release web -a $APP_NAME
