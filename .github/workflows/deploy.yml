@@ -5,6 +5,7 @@ on:
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
 
 jobs:
   specs:
@@ -40,8 +41,23 @@ jobs:
       - run: bundle install
       - run: bundle exec rails db:prepare
       - run: bundle exec rspec
-  deploy:
+  worker:
     needs: specs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: CDNievas/heroku-action@v1.0
+        with:
+          heroku_email: $HEROKU_EMAIL
+          heroku_api_key: $HEROKU_API_KEY
+          heroku_app_name: $APP_NAME
+          useforce: true,
+          dynamicFiles: true,
+          procfile: |
+            worker: bundle exec sidekiq -e production -C config/sidekiq.yml
+            release: bundle exec rails db:migrate
+  deploy:
+    needs: worker
     runs-on: ubuntu-latest
     steps:
       - name: Heroku Container registry
