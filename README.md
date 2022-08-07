@@ -14,7 +14,7 @@ The Quota for the Exercise of Parliamentary Activity - CEAP (former indemnity am
 	> ActiveJob queue with Sidekiq and Sidekiq-Cron
 
 - Filter data for easy searching deputy's spending
-- ***[WIP]*** Data Insight for constrution charts (BFF approach)
+- Data Insight for constrution charts (BFF approach)
 
 
 ## Running this project

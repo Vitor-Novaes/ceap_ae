@@ -10,6 +10,12 @@ shared_examples 'ok response' do
   include_examples "content-type json"
 end
 
+shared_examples 'bad_request response' do
+  it { expect(response).to have_http_status(:bad_request) }
+
+  include_examples "content-type json"
+end
+
 shared_examples 'not_found response' do
   it { expect(response).to have_http_status(:not_found) }
 

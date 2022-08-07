@@ -1,7 +1,7 @@
 module V1
   class DeputiesController < ApplicationController
     def index
-      deputies = filter_source(Deputy, params);
+      deputies = filter_source(Deputy, params)
 
       render json: DeputyBlueprint.render(
         paginate(deputies, per_page: params[:per_page], page: params[:page]),

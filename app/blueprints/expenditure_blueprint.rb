@@ -3,7 +3,7 @@ class ExpenditureBlueprint < Blueprinter::Base
 
   view :summary do
     fields :provider, :date, :period, :net_value
-    association :category, blueprint: CategoryBlueprint
+    association :category, blueprint: CategoryBlueprint, view: :summary
     association :deputy, blueprint: DeputyBlueprint, view: :summary
   end
 
