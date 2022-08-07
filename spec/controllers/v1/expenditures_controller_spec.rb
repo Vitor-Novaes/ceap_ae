@@ -2,6 +2,7 @@ describe V1::ExpendituresController, type: :controller do
   describe 'exposed routes' do
     it { should route(:get, '/v1/expenditures').to(action: :index) }
     it { should route(:get, '/v1/expenditures/1').to(action: :show, id: 1) }
+    it { should route(:post, '/v1/expenditures/import').to(action: :import_data) }
   end
 
   describe 'GET /v1/expenditures/:id' do
@@ -48,6 +49,36 @@ describe V1::ExpendituresController, type: :controller do
     end
   end
 
+  describe 'POST /v1/expenditures/import' do
+    context 'When pass nil file' do
+      before { post :import_data, params: { file: nil } }
+
+      include_examples 'bad_request response'
+
+      it 'Should return error file' do
+        expect(response.body).to include_json({
+          errors: {
+            message: "That action require CSV file type"
+          }
+        })
+      end
+    end
+
+    context 'When pass file not allowed' do
+      before { post :import_data, params: { file: Rack::Test::UploadedFile.new(file_fixture('Ano-2022.csv.zip')) } }
+
+      include_examples 'bad_request response'
+
+      it 'Should return error content-type' do
+        expect(response.body).to include_json({
+          errors: {
+            message: "That action require CSV file type"
+          }
+        })
+      end
+    end
+  end
+
   describe 'GET /v1/expenditures' do
     before do
       meshuggah = create(:organization, abbreviation: 'MSG')
@@ -86,7 +117,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('5')
         expect(response.headers['X-Total']).to eq('5')
         expect(response.headers['Link']).to be_nil
-        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] >
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 
@@ -107,7 +140,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('2')
         expect(response.headers['X-Total']).to eq('15')
         expect(response.headers['Link']).not_to be_nil
-        expect(json_response.at(0)[:net_value] > json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] >
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 
@@ -128,7 +163,9 @@ describe V1::ExpendituresController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('5')
         expect(response.headers['X-Total']).to eq('5')
         expect(response.headers['Link']).to be_nil
-        expect(json_response.at(0)[:net_value] < json_response.at(1)[:net_value])
+        expect(json_response[:expenditures].at(0)[:net_value] <
+          json_response[:expenditures].at(1)[:net_value]
+        )
       end
     end
 

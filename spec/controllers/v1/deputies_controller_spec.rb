@@ -82,8 +82,8 @@ describe V1::DeputiesController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('5')
         expect(response.headers['X-Total']).to eq('1')
         expect(response.body).to include_json({
-          0 => { name: 'Itsári', organization: { abbreviation: 'SPL'},
-          ide: '2000', parlamentary_card: '2000', cpf: '40028922' }
+          deputies: { 0 => { name: 'Itsári', organization: { abbreviation: 'SPL'},
+          ide: '2000', parlamentary_card: '2000', cpf: '40028922' } }
         })
       end
     end
@@ -105,7 +105,7 @@ describe V1::DeputiesController, type: :controller do
         expect(response.headers['X-Per-Page']).to eq('2')
         expect(response.headers['X-Total']).to eq('5')
         expect(response.headers['Link']).not_to be_nil
-        expect(json_response.at(0)[:total_spent] > json_response.at(1)[:total_spent])
+        expect(json_response[:deputies].at(0)[:total_spent] > json_response[:deputies].at(1)[:total_spent])
       end
     end
 

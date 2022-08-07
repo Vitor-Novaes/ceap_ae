@@ -17,10 +17,6 @@ class Deputy < ApplicationRecord
       .order("sum(expenditures.net_value) #{params[:total_spent] || 'DESC'}")
   }
 
-  def total_expense
-    self.expenditures.sum(:net_value).ceil(2)
-  end
-
   def self.map_term(key)
     {
       name: { term: ' name ILIKE :name ', type: 'string' },

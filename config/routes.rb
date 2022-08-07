@@ -10,8 +10,11 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   namespace :v1 do
-    resources :organizations, only: %i[show index]
     resources :deputies, only: %i[show index]
     resources :expenditures, only: %i[index show]
+    post 'expenditures/import/', to: 'expenditures#import_data'
+
+    resources :organizations, only: %i[index]
+    resources :categories, only: %i[index]
   end
 end
