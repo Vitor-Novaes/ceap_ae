@@ -50,8 +50,8 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  config.active_job.queue_adapter     = :sidekiq
-  config.active_job.queue_name_prefix = 'ceap_prod'
+  # config.active_job.queue_adapter     = :sidekiq
+  # config.active_job.queue_name_prefix = 'ceap_prod'
 
   config.action_mailer.perform_caching = false
 
