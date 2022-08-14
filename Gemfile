@@ -14,11 +14,8 @@ gem 'pg', '~> 1.1'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'jbuilder'
-
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
+gem 'bootsnap', '~> 1.12.0', require: false
 
 # [https://github.com/roo-rb/roo]
 gem 'roo', '~> 2.9.0'
@@ -33,12 +30,16 @@ gem 'rubyzip', '~> 2.3.2'
 gem 'blueprinter', '~> 0.25'
 
 # [https://github.com/ondrejbartas/sidekiq-cron]
-gem 'sidekiq-cron', '~> 1.7.0'
 gem 'sidekiq', '~> 6.5.1'
 
+# [https://github.com/ondrejbartas/sidekiq-cron]
+gem 'sidekiq-cron', '~> 1.7.0'
+
 # [https://github.com/kaminari/kaminari]
-gem 'kaminari'
-gem 'api-pagination'
+gem 'api-pagination', '~> 5.0.0'
+
+# [https://github.com/davidcelis/api-pagination]
+gem 'kaminari', '~> 1.2.2'
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -46,6 +47,7 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-json_expectations'
   gem 'rspec-rails'
+  gem 'rubycritic', require: false
 end
 
 group :development do
@@ -63,8 +65,8 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'shoulda-matchers'
-  gem "webmock"
-  gem 'simplecov', require: false
   gem 'rspec-sidekiq'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
+  gem 'webmock'
 end

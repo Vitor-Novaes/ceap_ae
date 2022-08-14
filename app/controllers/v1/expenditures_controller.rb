@@ -4,12 +4,12 @@ module V1
       expenditures = filter_source(Expenditure, params)
 
       render json: ExpenditureBlueprint.render(
-        paginate(expenditures, per_page: params[:per_page], page: params[:page]),
-        view: :summary,
-        root: :expenditures,
-        meta: {
-          total_expenses: report_expenses(expenditures)
-        }
+          paginate(expenditures, per_page: params[:per_page], page: params[:page]),
+          view: :summary,
+          root: :expenditures,
+          meta: {
+            total_expenses: report_expenses(expenditures)
+          }
       ), status: :ok
     end
 
@@ -25,7 +25,14 @@ module V1
       File.open(path_file, 'w') { |f| f.write(@file.read.force_encoding('UTF-8')) }
       ImportDataJob.perform_later(path_file)
 
-      render json: { message: 'Success enqueued process' }, status: :ok
+      render(json: { message: 'Success enqueued process' }, status: :ok)
+    end
+
+    # at_least_for_now
+    def execute_sync
+      SyncDataJob.perform_later
+
+      render(json: { message: 'Success enqueued process' }, status: :ok)
     end
 
     def show

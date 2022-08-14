@@ -1,8 +1,11 @@
 describe V1::ExpendituresController, type: :controller do
+  include ActiveJob::TestHelper
+
   describe 'exposed routes' do
     it { should route(:get, '/v1/expenditures').to(action: :index) }
     it { should route(:get, '/v1/expenditures/1').to(action: :show, id: 1) }
     it { should route(:post, '/v1/expenditures/import').to(action: :import_data) }
+    it { should route(:post, '/v1/expenditures/sync').to(action: :execute_sync) }
   end
 
   describe 'GET /v1/expenditures/:id' do
@@ -65,7 +68,7 @@ describe V1::ExpendituresController, type: :controller do
     end
 
     context 'When pass file not allowed' do
-      before { post :import_data, params: { file: Rack::Test::UploadedFile.new(file_fixture('Ano-2022.csv.zip')) } }
+      before { post :import_data, params: { file: fixture_file_upload('Ano-2022.csv.zip') } }
 
       include_examples 'bad_request response'
 
@@ -75,6 +78,34 @@ describe V1::ExpendituresController, type: :controller do
             message: "That action require CSV file type"
           }
         })
+      end
+    end
+
+    context 'When pass file allowed' do
+      before { post :import_data, params: { file: fixture_file_upload('2022.csv', 'text/csv') } }
+
+      include_examples 'ok response'
+
+      it 'Should return success enqueued' do
+        expect(response.body).to include_json({ message: "Success enqueued process" })
+        assert_enqueued_jobs 1, queue: 'default'
+        expect(SyncDataJob).to be_retryable true
+        expect(SyncDataJob).to be_processed_in :default
+      end
+    end
+  end
+
+  describe 'POST /v1/expenditures/sync' do
+    context 'When pass file not allowed' do
+      before { post :execute_sync }
+
+      include_examples 'ok response'
+
+      it 'Should return success enqueued' do
+        expect(response.body).to include_json({ message: "Success enqueued process" })
+        assert_enqueued_jobs 1, queue: 'default'
+        expect(SyncDataJob).to be_retryable true
+        expect(SyncDataJob).to be_processed_in :default
       end
     end
   end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :deputies, only: %i[show index]
     resources :expenditures, only: %i[index show]
     post 'expenditures/import/', to: 'expenditures#import_data'
+    post 'expenditures/sync/', to: 'expenditures#execute_sync'
 
     resources :organizations, only: %i[index]
     resources :categories, only: %i[index]
