@@ -20,11 +20,14 @@ Layout/HeredocIndentation:
 Style/Documentation:
   Enabled: false
 
-Style/EndOfLine:
-  EnforcedStyle: lf
-
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/EndOfLine:
+  EnforcedStyle: lf
 
 Metrics/BlockLength:
   Exclude:
